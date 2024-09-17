@@ -1,0 +1,253 @@
+// import React, { useState } from 'react';
+
+// const FirebaseDemo = () => {
+
+//   // State to handle form details
+//   const [details, setDetails] = useState({
+//     fName: '',
+//     email: '',
+//     rollNo: '',
+//     contact: '',
+//     domain: ''
+//   });
+
+//   // State to handle popup visibility
+//   const [showPopup, setShowPopup] = useState(false);
+
+//   // State to handle admin login
+//   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+//   const [adminCredentials, setAdminCredentials] = useState({
+//     username: '',
+//     password: ''
+//   });
+
+//   // Function to handle input changes for registration form
+//   const handleChange = (e) => {
+//     setDetails({
+//       ...details,
+//       [e.target.name]: e.target.value
+//     });
+//   };
+
+//   // Function to handle admin login input changes
+//   const handleAdminChange = (e) => {
+//     setAdminCredentials({
+//       ...adminCredentials,
+//       [e.target.name]: e.target.value
+//     });
+//   };
+
+//   // Function to send data to Firebase on form submission
+//   const PostData = async (e) => {
+//     e.preventDefault();
+
+//     const { fName, email, rollNo, contact, domain } = details;
+
+//     const res = await fetch("https://droid-entry-default-rtdb.firebaseio.com/Droid.json", {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         fName,
+//         email,
+//         rollNo,
+//         contact,
+//         domain
+//       })
+//     });
+
+//     // Handle response and show popup if successful
+//     if (res) {
+//       setShowPopup(true); // Show popup
+//     } else {
+//       alert('Error registering. Please try again.');
+//     }
+//   };
+
+//   // Function to close the popup
+//   const closePopup = () => {
+//     setShowPopup(false);
+//   };
+
+//   // Function to handle admin login
+//   const handleAdminLogin = (e) => {
+//     e.preventDefault();
+//     const { username, password } = adminCredentials;
+
+//     // Simple login logic (you can replace this with actual auth logic)
+//     if (username === 'admin' && password === 'admin123') {
+//       setIsAdminLoggedIn(true);  // Set admin login to true if credentials match
+//     } else {
+//       alert('Invalid credentials');
+//     }
+//   };
+
+//   return (
+//     <section className="flex flex-col md:flex-row max-h-screen items-center bg-black">
+//       {/* Image Section */}
+//       <div className="hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
+//         <img
+//           src="https://i.postimg.cc/PJL1DxRX/droid.jpg"
+//           alt="Random Image"
+//           className="w-full h-full object-cover opacity-70"
+//         />
+//       </div>
+
+//       {/* Form Section */}
+//       <div className="bg-gray-800 w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
+//         <div className="w-full h-100">
+//           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12 text-white">
+//             {isAdminLoggedIn ? "Register for Droid" : "Admin Login"}
+//           </h1>
+
+//           {!isAdminLoggedIn ? (
+//             // Admin login form
+//             <form className="mt-6" onSubmit={handleAdminLogin}>
+//               {/* Username Input */}
+//               <div>
+//                 <label className="block text-gray-300">Username</label>
+//                 <input
+//                   type="text"
+//                   name="username"
+//                   placeholder="Enter admin username"
+//                   value={adminCredentials.username}
+//                   onChange={handleAdminChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 />
+//               </div>
+
+//               {/* Password Input */}
+//               <div className="mt-4">
+//                 <label className="block text-gray-300">Password</label>
+//                 <input
+//                   type="password"
+//                   name="password"
+//                   placeholder="Enter admin password"
+//                   value={adminCredentials.password}
+//                   onChange={handleAdminChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 />
+//               </div>
+
+//               <button
+//                 type="submit"
+//                 className="w-full block bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+//               >
+//                 Login as Admin
+//               </button>
+//             </form>
+//           ) : (
+//             // Registration form (visible only after admin logs in)
+//             <form className="mt-6" onSubmit={PostData}>
+//               {/* Name Input */}
+//               <div>
+//                 <label className="block text-gray-300">Name</label>
+//                 <input
+//                   type="text"
+//                   name="fName"
+//                   placeholder="Enter your name"
+//                   value={details.fName}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 />
+//               </div>
+
+//               {/* Email Input */}
+//               <div className="mt-4">
+//                 <label className="block text-gray-300">Email Address</label>
+//                 <input
+//                   type="email"
+//                   name="email"
+//                   placeholder="Enter your email address"
+//                   value={details.email}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 />
+//               </div>
+
+//               {/* University Roll No Input */}
+//               <div className="mt-4">
+//                 <label className="block text-gray-300">University Roll No</label>
+//                 <input
+//                   type="text"
+//                   name="rollNo"
+//                   placeholder="Enter your University Roll No"
+//                   value={details.rollNo}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 />
+//               </div>
+
+//               {/* Contact Number Input */}
+//               <div className="mt-4">
+//                 <label className="block text-gray-300">Contact Number</label>
+//                 <input
+//                   type="tel"
+//                   name="contact"
+//                   placeholder="Enter your contact number"
+//                   value={details.contact}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 />
+//               </div>
+
+//               {/* Domain Input */}
+//               <div className="mt-4">
+//                 <label className="block text-gray-300">Domain</label>
+//                 <select
+//                   name="domain"
+//                   value={details.domain}
+//                   onChange={handleChange}
+//                   className="w-full px-4 py-3 rounded-lg bg-gray-700 mt-2 text-gray-100 border border-gray-600 focus:border-blue-500 focus:bg-gray-900 focus:outline-none"
+//                   required
+//                 >
+//                   <option value="" disabled>
+//                     Select your domain
+//                   </option>
+//                   <option value="tech">Tech Team</option>
+//                   <option value="content">Content Team</option>
+//                   <option value="design">Design Team</option>
+//                   <option value="event">Event Team</option>
+//                   <option value="media">Media Team</option>
+//                   <option value="webdev">Web Dev</option>
+//                 </select>
+//               </div>
+
+//               <button
+//                 type="submit"
+//                 className="w-full block bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+//               >
+//                 Register
+//               </button>
+//             </form>
+//           )}
+
+//           {/* Popup Modal */}
+//           {showPopup && (
+//             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+//               <div className="bg-white rounded-lg p-8 max-w-sm mx-auto">
+//                 <h2 className="text-2xl font-semibold mb-4">Registration Successful!</h2>
+//                 <p>Thank you for registering with Droid. We will contact you soon.</p>
+//                 <button
+//                   onClick={closePopup}
+//                   className="mt-6 w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg px-4 py-3"
+//                 >
+//                   Close
+//                 </button>
+//               </div>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default FirebaseDemo;
